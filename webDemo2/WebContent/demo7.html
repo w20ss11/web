@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>demo7</title>
+<script type="text/javascript">
+	var iscommitted = false;
+	function dosubmit1(){
+		if(!iscommitted){
+			iscommitted = true;
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function dosubmit2(){
+		var input = document.getElementById("submit");
+		input.disabled = 'disabled';
+		return true;
+	}
+</script>
+</head>
+<body>
+	<form action="/webDemo2/SessionDemo7_1" method="post" onsubmit="return dosubmit1()">
+		用户名：<input type="text" name="username">
+		<input type="submit" value="提交">
+	</form>
+	<br/>
+	<form action="/webDemo2/SessionDemo7_1" method="post" onsubmit="return dosubmit2()">
+		用户名：<input type="text" name="username">
+		<input id="submit" type="submit" value="提交">
+	</form>
+</body>
+</html>

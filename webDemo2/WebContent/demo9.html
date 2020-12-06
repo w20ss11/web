@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		function changeImage(img){
+			img.src = img.src + "?" + new Date().getTime();
+		}
+	</script>
+</head>
+<body>
+	<!-- 访问此html 获取SessionDemo9_1生成的图片,将表单信息给SessionDemo9_2处理 -->
+	<form action="/webDemo2/SessionDemo9_2" method="post">
+		用户名：<input type="text" name="username"><br />
+		密    码：<input type="password" name="password"><br />
+		认证码：<input type="text" name="checkcode">
+		<img src="/webDemo2/SessionDemo9_1" onclick="changeImage(this)" alt="换一张" style="cursor:hand"><br />
+		<input type="submit" value="注册">
+	</form>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>使用</h3>
+	分为两部分,入口分别为：<br>
+	articles.jsp<br>
+	authority-manager.jsp<br>
+	
+	<br><hr><br>
+	
+	
+	<h3>权限管理</h3>
+	<h4>1.管理权限</h4>
+	UserDao，表设计：用户名username，权限信息List《Authorit》<br>
+	数据库功能需求：查询（使用用户名查询），更改<br>
+	<h4>2.如何过滤</h4>
+	一个权限对应了一个URL地址,例如Article1→article4.jsp<br>
+	
+	<h4>3.页面</h4>
+	authority-manage.jsp页面：输入username，提交给Servlet，使用checkbox显示用户权限信息<br>
+	
+	<h4>4.Servlet</h4>
+	4.1处理authority-manage.jsp提交的请求参数username，再根据username获取数据库user信息，
+	转发到authority-manage.jsp并显示<br>
+	4.1.1若有，则使用checkbox将对应权限勾上，使用两层循环方式筛选出被选中的权限<br>
+	修改权限提交后：获取请求参数：username，authority（多选）；<br>
+	<p>
+	authority-manager.jsp 提交表单后 get 方法: 获取表单的请求参数: username, 再根据 username 获取 User 信息. 把 user 放入到
+	request 中, 转发到 authority-manager.jsp.<br>
+	authority-manager.jsp 修改权限的表单提交后 update 方法: 获取请求参数: username, authory(多选); 把选项封装为 List; 调用
+	UserDao 的 update() 方法实现权限的修改; 重定向到 authority-manager.jsp<br></p>
+	
+	<h3>5.写代码顺序</h3>
+	5.1 Authority.java  &nbsp;&nbsp;&nbsp;&nbsp; String displayName String url<br>
+	5.2 User.java &nbsp;&nbsp;&nbsp;&nbsp;String username List 《Autority》<br>
+	5.3 UserDao.java &nbsp;&nbsp;&nbsp;&nbsp; get(String name) update(String name,List《Authority》)<br>
+	5.4 authority-manage.jsp<br>
+	5.5 AuthorityServlet <br>
+	
+	<p>以上和articles.jsp无关</p>
+	<br><hr><br>
+	
+	<h3>权限过滤</h3>
+	<h4>1.filter</h4>
+	<b>使用filter如何过滤</b><br>
+	1.1获取servletpath，如/article1.jsp;（在用户已经登录情况下，获取用户信息,loginservlet处理）<br>
+	1.2再获取用户权限信息：List《authority》<br>
+	1.3检验用户是否有请求servletPath权限：可以思考除了遍历外，有无更好的方法<br>
+	1.4检验用户是否有权限，有则响应；没有则重定向到啊403.jsp<br>
+	<br>
+	- 用户若登录, 需要把用户信息(User 对象)放入到 HttpSession 中.<br>
+	- 在检验权限之前, 需要判断用户是否已经登录.  <br>
+	
+	
+	<h4>2.写代码顺序</h4>
+	&nbsp;&nbsp;articles.jsp article-1、2、3、4.jsp 403.jsp<br>
+	2.1 login.jsp <br>
+	2.2 LoginServlet.java <br>
+	&nbsp;&nbsp;login处理login.jsp的username获取信息,重定向到articles.jsp<br>
+	2.3 AuthorityFilter.java<br>
+	&nbsp;&nbsp;判断servletPath是否在不需要过滤的jsp名单内<br>
+	&nbsp;&nbsp;判断用户登录否：没有登录跳转log.jsp；已经登录则获取用户权限信息（通过session）<br>
+	&nbsp;&nbsp;获取用户有没有对应权限，则403.jsp；有权限则跳转<br>
+	2.4 logout.jsp<br>
+	&nbsp;&nbsp;清楚session信息,重定向到log.jsp<br>
+	<br><br>
+	
+</body>
+</html>

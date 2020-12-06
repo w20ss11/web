@@ -1,0 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h3>demo3 attribute listener</h3>
+	<% 
+		request.setAttribute("name", "ABCD");
+		System.out.println("-----------------------------");
+		
+		request.setAttribute("name", "DEFG");
+		System.out.println("-----------------------------");
+		
+		request.removeAttribute("name");
+		System.out.println("-----------------------------");
+	%>
+</body>
+</html>
